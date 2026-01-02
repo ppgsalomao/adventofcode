@@ -11,7 +11,7 @@ def add_beam_to_position(tachyon_manifold, layer_number, column_number):
         return
     tachyon_manifold[layer_number] = tachyon_manifold[layer_number][:column_number] + '|' + tachyon_manifold[layer_number][column_number+1:]
 
-def run_bean_to_empty_spaces(tachyon_manifold, layer_number):
+def run_beam_to_empty_spaces(tachyon_manifold, layer_number):
     if layer_number >= len(tachyon_manifold):
         return
     
@@ -23,7 +23,7 @@ def run_bean_to_empty_spaces(tachyon_manifold, layer_number):
         if is_free_space and (has_beam_above or is_starter_position_above):
             add_beam_to_position(tachyon_manifold, layer_number, column)
 
-def split_bean(tachyon_manifold, layer_number):
+def split_beam(tachyon_manifold, layer_number):
     if layer_number >= len(tachyon_manifold):
         return 0
     
@@ -40,30 +40,23 @@ def split_bean(tachyon_manifold, layer_number):
             if is_next_space_empty:
                 add_beam_to_position(tachyon_manifold, layer_number, column + 1)
             beam_split_count += 1
-    
-    tachyon_manifold[layer_number] = tachyon_manifold[layer_number].replace('/', '|')
 
     return beam_split_count
 
-def run_bean_through_manifold(tachyon_manifold):
+def run_beam_through_manifold(tachyon_manifold):
 
     beam_split_count = 0
 
     for layer_number in range(len(tachyon_manifold)):
-        print(f"Before layer {layer_number}:\n" + "\n".join(tachyon_manifold[layer_number-2:layer_number+1]) + "\n")
-
-        run_bean_to_empty_spaces(tachyon_manifold, layer_number)
-        split_count_in_layer = split_bean(tachyon_manifold, layer_number)
+        run_beam_to_empty_spaces(tachyon_manifold, layer_number)
+        split_count_in_layer = split_beam(tachyon_manifold, layer_number)
         beam_split_count += split_count_in_layer
-
-        print(f"After layer {layer_number}:\n" + "\n".join(tachyon_manifold[layer_number-2:layer_number+1]) + "\n")
-        print(f" - Split Count in Layer: {split_count_in_layer}\n")
 
     return beam_split_count
 
 if __name__ == "__main__":
     tachyon_manifold = read_input('2025/day7/input.txt')
 
-    beam_split_count = run_bean_through_manifold(tachyon_manifold)
+    beam_split_count = run_beam_through_manifold(tachyon_manifold)
 
     print(f"Total beam splits: {beam_split_count}")
