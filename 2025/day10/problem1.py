@@ -38,7 +38,7 @@ def calculate_minimal_button_presses(machine):
 
         return False
         
-    for clicks in range(1, len(machine['target']) + 1):
+    for clicks in range(1, len(machine['buttons']) + 1):
         if does_clicks_reach_target("." * len(machine['target']), clicks):
             return clicks
 
